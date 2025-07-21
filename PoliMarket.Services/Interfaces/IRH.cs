@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PoliMarket.Services.Interfaces
+{
+    public interface IRH
+    {
+        Task<bool> AutorizarUsuario(string nombreUsuario, string nombreSistema);
+    }
+}
