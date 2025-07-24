@@ -1,4 +1,5 @@
 ﻿using PoliMarket.Models;
+using PoliMarket.Models.Enums;
 using PoliMarket.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,7 +24,7 @@ namespace PoliMarket.Services
             {
                 Id = 1,
                 IdVenta = 1001,
-                Entregado = "Pendiente",
+                Estado = EstadoEntregaEnum.Pendiente,
                 Productos = new List<ProductoModel>
                 {
                     new ProductoModel { Id = 1, Nombre = "A123", Descripcion = "Producto A" },
@@ -34,7 +35,7 @@ namespace PoliMarket.Services
             {
                 Id = 2,
                 IdVenta = 1002,
-                Entregado = "Sí",
+                Estado = EstadoEntregaEnum.Entregado,
                 Productos = new List<ProductoModel>
                 {
                     new ProductoModel { Id = 3, Nombre = "C789", Descripcion = "Producto C" }
@@ -79,8 +80,9 @@ namespace PoliMarket.Services
         // 4. Consultar entregas pendientes
         public List<EntregaModel> ObtenerEntregas(string estado)
         {
+            var estadoEntrega = (EstadoEntregaEnum)Enum.Parse(typeof(EstadoEntregaEnum), estado);
             return _entregas
-                .Where(e => string.Equals(e.Entregado, estado, StringComparison.OrdinalIgnoreCase))
+                .Where(e => e.Estado.Equals(estadoEntrega))
                 .ToList();
         }
 
@@ -90,7 +92,7 @@ namespace PoliMarket.Services
             // Buscar entrega
             var entregaExistente = _entregas.FirstOrDefault(e => e.Id == entrega.Id);
 
-            if (entregaExistente == null || entregaExistente.Entregado == "Sí")
+            if (entregaExistente == null || entregaExistente.Estado != EstadoEntregaEnum.Pendiente)
                 return false;
 
             foreach (var producto in entregaExistente.Productos ?? Enumerable.Empty<ProductoModel>())
@@ -107,7 +109,7 @@ namespace PoliMarket.Services
                 disponibilidad.Cantidad -= 1;
             }
 
-            entregaExistente.Entregado = "Sí";
+            entregaExistente.Estado = EstadoEntregaEnum.Entregado;
             return true;
         }
     }

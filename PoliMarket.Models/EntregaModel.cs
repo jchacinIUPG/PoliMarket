@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PoliMarket.Models.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace PoliMarket.Models
     {
         public int Id { get; set; }
         public int IdVenta { get; set; }
-        public string? Entregado { get; set; }
+        public EstadoEntregaEnum Estado { get; set; }
         public List<ProductoModel>? Productos { get; set; }
     }
 }
