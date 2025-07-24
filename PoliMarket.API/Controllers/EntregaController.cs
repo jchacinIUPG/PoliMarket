@@ -17,14 +17,28 @@ namespace PoliMarket.API.Controllers
             _iEntregasServices = iEntregasServices;
         }
 
-
         [HttpGet("Entregas/Estado/{estado}")]
-        public IActionResult Autorizar([FromBody] string estado)
+        public IActionResult ConsultarEntregas(string estado)
         {
-           var entregas = _iEntregasServices.ObtenerEntregas(estado);
+            try
+            {
+                var entregas = _iEntregasServices.ObtenerEntregas(estado);
 
-            return entregas.Any() ? Ok(entregas) : NotFound("No se encontraron entregas.");
+                if (entregas == null || !entregas.Any())
+                    return NotFound(new { mensaje = "No se encontraron entregas con el estado especificado." });
+
+                return Ok(entregas);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    mensaje = "Ocurrió un error al consultar las entregas.",
+                    detalle = ex.Message
+                });
+            }
         }
+
 
         [HttpPost, Route("Entregas/RegistrarSalida")]
         public IActionResult RegistrarSalida([FromBody] EntregaModel entrega)
