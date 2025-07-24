@@ -13,6 +13,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IRH, RHService>();
 builder.Services.AddSingleton<IBodega, BodegaService>();
 builder.Services.AddSingleton<IVentas, VentasService>();
+builder.Services.AddSingleton<IEntregas, EntregasService>();
 
 var app = builder.Build();
 

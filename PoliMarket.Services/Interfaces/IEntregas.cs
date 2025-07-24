@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 
 namespace PoliMarket.Services.Interfaces
 {
-    public interface IVentas
+    public interface IEntregas
     {
-        bool RegistrarVenta(VentasModel venta);
+        List<EntregaModel> ObtenerEntregas(string estado);
+
+        bool RegistrarSalida(EntregaModel entrega);
 
     }
 }
