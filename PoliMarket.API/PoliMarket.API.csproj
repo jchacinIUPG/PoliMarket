@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PoliMarket.Models\PoliMarket.Models.csproj" />
     <ProjectReference Include="..\PoliMarket.Services\PoliMarket.Services.csproj" />
   </ItemGroup>
 

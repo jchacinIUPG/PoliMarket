@@ -1,4 +1,6 @@
-﻿using PoliMarket.Services.Interfaces;
+﻿using PoliMarket.Models;
+using PoliMarket.Models.Enums;
+using PoliMarket.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +11,33 @@ namespace PoliMarket.Services
 {
     public class RHService : IRH
     {
-        public Task<bool> AutorizarUsuario(string nombreUsuario, string nombreSistema)
+        public static List<UsuarioModel>? Usuarios { get; set; }
+
+        public RHService() 
         {
-            throw new NotImplementedException();
+            Usuarios = new List<UsuarioModel> 
+            {
+                new UsuarioModel { Id = 1, Usuario = "jchacin", Permisos = new List<PermisoModel>() },
+                new UsuarioModel { Id = 2, Usuario = "cjimenez", Permisos = new List<PermisoModel>() },
+                new UsuarioModel { Id = 2, Usuario = "glopez", Permisos = new List<PermisoModel>() }
+            };
+        }
+
+        public bool AutorizarUsuario(string nombreUsuario, string nombreSistema)
+        {
+            var usuario = Usuarios?.Find(u => u.Usuario == nombreUsuario);
+            if (usuario != null)
+            {
+                var sistema = (SistemaEnum)Enum.Parse(typeof(SistemaEnum), nombreSistema);
+                var idSistema = (short)sistema;
+                if (usuario.Permisos?.Any(p => p.IdSistema == idSistema) == false)
+                    usuario.Permisos.Add(new PermisoModel { IdSistema = (short)sistema, IdUsuario = usuario.Id });
+                return true;
+            }
+            else 
+            {
+                return false;
+            }
         }
     }
 }

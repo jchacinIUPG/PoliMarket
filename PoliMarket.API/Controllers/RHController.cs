@@ -17,38 +17,17 @@ namespace PoliMarket.API.Controllers
             _iRHService = iRHService;
         }
 
-        // GET: api/<RHController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<RHController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<RHController>
+        /// <summary>
+        /// Autoriza el acceso de un usuario a un sistema definido
+        /// </summary>
+        /// <param name="auth"></param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] AuthDTO auth)
+        public IActionResult Post([FromBody] AuthDTO auth)
         {
-            bool result = await _iRHService.AutorizarUsuario(auth.NombreUsuario, auth.NombreSistema);
+            bool result = _iRHService.AutorizarUsuario(auth.NombreUsuario, auth.NombreSistema);
             return result ? Ok() : BadRequest();
-        }
-
-        // PUT api/<RHController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<RHController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
         }
     }
 }

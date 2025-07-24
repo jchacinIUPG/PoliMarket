@@ -8,6 +8,6 @@ namespace PoliMarket.Services.Interfaces
 {
     public interface IRH
     {
-        Task<bool> AutorizarUsuario(string nombreUsuario, string nombreSistema);
+        bool AutorizarUsuario(string nombreUsuario, string nombreSistema);
     }
 }
