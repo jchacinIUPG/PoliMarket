@@ -11,7 +11,7 @@ namespace PoliMarket.Services
 {
     public class RHService : IRH
     {
-        public static List<UsuarioModel>? Usuarios { get; set; }
+        private static List<UsuarioModel>? Usuarios { get; set; }
 
         public RHService() 
         {

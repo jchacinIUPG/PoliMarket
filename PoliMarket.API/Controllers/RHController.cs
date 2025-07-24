@@ -17,14 +17,14 @@ namespace PoliMarket.API.Controllers
             _iRHService = iRHService;
         }
 
-        // POST api/<RHController>
+        // POST api/<RHController>/Autorizar
         /// <summary>
         /// Autoriza el acceso de un usuario a un sistema definido
         /// </summary>
-        /// <param name="auth"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public IActionResult Post([FromBody] AuthDTO auth)
+        /// <param name="auth">Usuario y sistema a autorizar</param>
+        /// <returns>True: autorizado, False: no autorizado</returns>
+        [HttpPost, Route("Autorizar")]
+        public IActionResult Autorizar([FromBody] AuthDTO auth)
         {
             bool result = _iRHService.AutorizarUsuario(auth.NombreUsuario, auth.NombreSistema);
             return result ? Ok() : BadRequest();

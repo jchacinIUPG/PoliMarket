@@ -11,6 +11,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 // WARN: Añadir el resto de servicios como Singleton para poder mantener los datos en tiempo de ejecución para todas las solicitudes.
 builder.Services.AddSingleton<IRH, RHService>();
+builder.Services.AddSingleton<IBodega, BodegaService>();
 
 var app = builder.Build();
 
