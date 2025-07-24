@@ -11,10 +11,12 @@ namespace PoliMarket.API.Controllers
     public class VentasController : ControllerBase
     {
         private readonly IBodega _iBodega;
+        private readonly IVentas _iVentas;
 
-        public VentasController(IBodega iBodega) 
+        public VentasController(IBodega iBodega, IVentas iVentas) 
         {
             _iBodega = iBodega;
+            _iVentas = iVentas;
         }
 
         // GET: api/<VentasController>/ObtenerProductos
@@ -26,6 +28,19 @@ namespace PoliMarket.API.Controllers
         public List<DisponibilidadModel> ObtenerProductos()
         {
             return _iBodega.ProductosDisponibles();
+        }
+
+        // POST api/<VentasController>/RegistrarVenta
+        /// <summary>
+        /// Registra la venta realizada por un vendedor
+        /// </summary>
+        /// <param name="venta">Datos de la venta</param>
+        /// <returns>True: registro exitoso, False: registro fallido</returns>
+        [HttpPost, Route("RegistrarVenta")]
+        public IActionResult RegistrarVenta([FromBody] VentasModel venta)
+        {
+            bool result = _iVentas.RegistrarVenta(venta);
+            return result ? Ok() : BadRequest();
         }
     }
 }
