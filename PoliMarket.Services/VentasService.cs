@@ -13,6 +13,8 @@ namespace PoliMarket.Services
     {
         private static List<VentasModel>? Ventas { get; set; }
 
+      
+
         public VentasService() 
         {
             Ventas = new List<VentasModel>();
@@ -39,7 +41,7 @@ namespace PoliMarket.Services
 
         public VentasModel ObtenerVentaPorId(long idVenta)
         {
-            return Ventas?.Find(v => v.Id == idVenta);
+            return Ventas?.FirstOrDefault(v => v.Id == idVenta);
         }
     }
 }

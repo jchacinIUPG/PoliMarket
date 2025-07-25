@@ -11,6 +11,7 @@ namespace PoliMarket.Services.Interfaces
     {
         bool RegistrarVenta(VentasModel venta);
         VentasModel ObtenerVentaPorId(long idVenta);
+        List<EntregaModel> ObtenerEntregas(string estado);
 
     }
 }

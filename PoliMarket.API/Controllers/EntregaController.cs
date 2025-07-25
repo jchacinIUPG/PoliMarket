@@ -10,19 +10,21 @@ namespace PoliMarket.API.Controllers
     [ApiController]
     public class EntregaController : ControllerBase
     {
-        private readonly IEntregas _iEntregasServices;
+        private readonly IVentas _iVentasServices;
+        private readonly IBodega _iBodegaServices;
 
-        public EntregaController(IEntregas iEntregasServices)
+        public EntregaController(IVentas iVentasServices, IBodega iBodegasServices)
         {
-            _iEntregasServices = iEntregasServices;
+            _iVentasServices = iVentasServices;
+            _iBodegaServices = iBodegasServices;
         }
 
-        [HttpGet("Entregas/Estado/{estado}")]
+        [HttpGet("ConsultarEntregas/{estado}")]
         public IActionResult ConsultarEntregas(string estado)
         {
             try
             {
-                var entregas = _iEntregasServices.ObtenerEntregas(estado);
+                var entregas = _iVentasServices.ObtenerEntregas(estado);
 
                 if (entregas == null || !entregas.Any())
                     return NotFound(new { mensaje = "No se encontraron entregas con el estado especificado." });
@@ -40,12 +42,12 @@ namespace PoliMarket.API.Controllers
         }
 
 
-        [HttpPost, Route("Entregas/RegistrarSalida")]
+        [HttpPost, Route("RegistrarSalida")]
         public IActionResult RegistrarSalida([FromBody] EntregaModel entrega)
         {
             try
             {
-                bool result = _iEntregasServices.RegistrarSalida(entrega);
+                bool result = _iBodegaServices.RegistrarSalida(entrega);
 
                 return result
                     ? Ok(new { mensaje = "Salida registrada correctamente." })

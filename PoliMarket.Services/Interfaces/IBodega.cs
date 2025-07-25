@@ -10,5 +10,6 @@ namespace PoliMarket.Services.Interfaces
     public interface IBodega
     {
         List<DisponibilidadModel> ProductosDisponibles();
+        bool RegistrarSalida(EntregaModel entrega);
     }
 }
