@@ -16,5 +16,6 @@ namespace PoliMarket.Models
         public VendedorModel? Vendedor { get; set; }
         public ClienteModel? Cliente { get; set; }
         public List<DetalleVentaModel>? Detalles { get; set; }
+        public EntregaModel? Entrega { get; set; }
     }
 }

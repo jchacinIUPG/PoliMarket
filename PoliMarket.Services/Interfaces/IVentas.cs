@@ -10,6 +10,7 @@ namespace PoliMarket.Services.Interfaces
     public interface IVentas
     {
         bool RegistrarVenta(VentasModel venta);
+        VentasModel ObtenerVentaPorId(long idVenta);
 
     }
 }

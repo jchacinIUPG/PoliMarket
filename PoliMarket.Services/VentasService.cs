@@ -1,4 +1,5 @@
 ﻿using PoliMarket.Models;
+using PoliMarket.Models.Enums;
 using PoliMarket.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -28,6 +29,17 @@ namespace PoliMarket.Services
             {
                 return false;
             }
+        }
+
+        public List<EntregaModel> ObtenerEntregas(string estado)
+        {
+            var estadoEntrega = (EstadoEntregaEnum)Enum.Parse(typeof(EstadoEntregaEnum), estado);
+            return Ventas?.FindAll(v => v.Entrega.Estado.Equals(estadoEntrega)).Select(v => v.Entrega).ToList();
+        }
+
+        public VentasModel ObtenerVentaPorId(long idVenta)
+        {
+            return Ventas?.Find(v => v.Id == idVenta);
         }
     }
 }
