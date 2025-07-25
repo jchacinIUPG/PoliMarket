@@ -55,7 +55,7 @@ namespace PoliMarket.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { mensaje = "Error al registrar la salida.", detalle = ex.Message });
+                return StatusCode(500, new { mensaje = "Error al registrar la salida." + ex.Message });
             }
         }
     }

@@ -89,19 +89,26 @@ namespace PoliMarket.Services
 
         public bool RegistrarSalida(EntregaModel entrega)
         {
-            var venta = _iVentas.ObtenerVentaPorId(entrega.IdVenta);
-            entrega.Productos.ForEach(p =>
+            try
             {
-                var producto = Bodega.Productos.FirstOrDefault(pd => pd.IdProducto == p.Id);
-                var unidades = venta.Detalles.Find(d => d.IdProducto == p.Id).Unidades;
-                if (producto != null && unidades <= producto.Cantidad)
+                var venta = _iVentas.ObtenerVentaPorId(entrega.IdVenta);
+                entrega.Productos.ForEach(p =>
                 {
-                    producto.Cantidad -= unidades;
-                }
-            });
+                    var producto = Bodega.Productos.FirstOrDefault(pd => pd.IdProducto == p.Id);
+                    var unidades = venta.Detalles.Find(d => d.IdProducto == p.Id).Unidades;
+                    if (producto != null && unidades <= producto.Cantidad)
+                    {
+                        producto.Cantidad -= unidades;
+                    }
+                });
 
-            venta.Entrega.Estado = EstadoEntregaEnum.Entregado;
-            return true;
+                venta.Entrega.Estado = EstadoEntregaEnum.Entregado;
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception("Error inesperado al registrar la salida", ex);
+            }
         }
     }
 }
