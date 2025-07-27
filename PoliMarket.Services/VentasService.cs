@@ -1,4 +1,5 @@
 ﻿using PoliMarket.Models;
+using PoliMarket.Models.Enums;
 using PoliMarket.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,9 @@ namespace PoliMarket.Services
     {
         private static List<VentasModel>? Ventas { get; set; }
 
-        public VentasService() 
+
+
+        public VentasService()
         {
             Ventas = new List<VentasModel>();
         }
@@ -28,6 +31,29 @@ namespace PoliMarket.Services
             {
                 return false;
             }
+        }
+
+        public List<EntregaModel> ObtenerEntregas(string estado)
+        {
+            try
+            {
+                var estadoEntrega = (EstadoEntregaEnum)Enum.Parse(typeof(EstadoEntregaEnum), estado);
+                return Ventas?.FindAll(v => v.Entrega.Estado.Equals(estadoEntrega)).Select(v => v.Entrega).ToList();
+
+            }
+            catch (ArgumentException)
+            {
+                throw new ArgumentException($"El estado '{estado}' no es válido. Usa valores como: {string.Join(", ", Enum.GetNames(typeof(EstadoEntregaEnum)))}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error inesperado al obtener las entregas", ex);
+            }
+        }
+
+        public VentasModel ObtenerVentaPorId(long idVenta)
+        {
+            return Ventas?.FirstOrDefault(v => v.Id == idVenta);
         }
     }
 }

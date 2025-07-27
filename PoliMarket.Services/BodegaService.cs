@@ -1,4 +1,5 @@
 ﻿using PoliMarket.Models;
+using PoliMarket.Models.Enums;
 using PoliMarket.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,11 @@ namespace PoliMarket.Services
     public class BodegaService : IBodega
     {
         private static BodegaModel? Bodega { get; set; }
+        private readonly IVentas _iVentas;
 
-        public BodegaService() 
+        public BodegaService(IVentas iVentas) 
         {
+            _iVentas = iVentas;
             Bodega = new BodegaModel 
             {
                 Id = 1,
@@ -82,6 +85,30 @@ namespace PoliMarket.Services
         public List<DisponibilidadModel> ProductosDisponibles()
         {
             return Bodega?.Productos?.FindAll(p => p.Cantidad > 0) ?? [];
+        }
+
+        public bool RegistrarSalida(EntregaModel entrega)
+        {
+            try
+            {
+                var venta = _iVentas.ObtenerVentaPorId(entrega.IdVenta);
+                entrega.Productos.ForEach(p =>
+                {
+                    var producto = Bodega.Productos.FirstOrDefault(pd => pd.IdProducto == p.Id);
+                    var unidades = venta.Detalles.Find(d => d.IdProducto == p.Id).Unidades;
+                    if (producto != null && unidades <= producto.Cantidad)
+                    {
+                        producto.Cantidad -= unidades;
+                    }
+                });
+
+                venta.Entrega.Estado = EstadoEntregaEnum.Entregado;
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                throw new Exception("Error inesperado al registrar la salida", ex);
+            }
         }
     }
 }
