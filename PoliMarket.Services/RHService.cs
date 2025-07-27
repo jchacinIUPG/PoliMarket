@@ -32,6 +32,9 @@ namespace PoliMarket.Services
                 var idSistema = (short)sistema;
                 if (usuario.Permisos?.Any(p => p.IdSistema == idSistema) == false)
                     usuario.Permisos.Add(new PermisoModel { IdSistema = (short)sistema, IdUsuario = usuario.Id });
+                else
+                    usuario.Permisos.RemoveAll(p => p.IdSistema == idSistema);
+
                 return true;
             }
             else 
