@@ -42,5 +42,10 @@ namespace PoliMarket.Services
                 return false;
             }
         }
+
+        public UsuarioModel? ObtenerUsuario(string nombreUsuario)
+        {
+            return Usuarios?.Find(u => u.Usuario == nombreUsuario);
+        }
     }
 }

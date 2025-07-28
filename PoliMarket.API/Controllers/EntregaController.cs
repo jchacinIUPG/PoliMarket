@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PoliMarket.API.DTOs;
+using PoliMarket.API.Middlewares.Validation;
 using PoliMarket.Models;
+using PoliMarket.Models.Enums;
 using PoliMarket.Services;
 using PoliMarket.Services.Interfaces;
 
@@ -8,6 +10,7 @@ namespace PoliMarket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequiresPermission(SistemaEnum.Entregas)]
     public class EntregaController : ControllerBase
     {
         private readonly IVentas _iVentasServices;

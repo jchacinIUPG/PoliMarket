@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PoliMarket.API.Middlewares.Validation;
 using PoliMarket.Models;
+using PoliMarket.Models.Enums;
 using PoliMarket.Services.Interfaces;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -8,6 +10,7 @@ namespace PoliMarket.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequiresPermission(SistemaEnum.Ventas)]
     public class VentasController : ControllerBase
     {
         private readonly IBodega _iBodega;
@@ -41,6 +44,12 @@ namespace PoliMarket.API.Controllers
         {
             bool result = _iVentas.RegistrarVenta(venta);
             return result ? Ok() : BadRequest();
+        }
+
+        [HttpGet]
+        public IActionResult AccessCheck() 
+        {
+            return Ok();
         }
     }
 }

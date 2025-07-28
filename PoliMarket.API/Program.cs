@@ -1,3 +1,4 @@
+using PoliMarket.API.Middlewares.Validation;
 using PoliMarket.Services;
 using PoliMarket.Services.Interfaces;
 
@@ -31,6 +32,8 @@ app.UseCors(x => x
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ValidationMiddleware>();
 
 app.MapControllers();
 

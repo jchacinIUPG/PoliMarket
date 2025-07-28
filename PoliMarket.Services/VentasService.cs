@@ -24,6 +24,8 @@ namespace PoliMarket.Services
         {
             try
             {
+                if (venta.Id == null) venta.Id = Ventas.Count > 0 ? Ventas.Max(v => v.Id) + 1 : 1;
+
                 Ventas?.Add(venta);
                 return true;
             }
