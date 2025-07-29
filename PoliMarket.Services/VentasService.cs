@@ -24,7 +24,13 @@ namespace PoliMarket.Services
         {
             try
             {
-                if (venta.Id == null) venta.Id = Ventas.Count > 0 ? Ventas.Max(v => v.Id) + 1 : 1;
+                venta.Id = Ventas.Count > 0 ? Ventas.Max(v => v.Id) + 1 : 1;
+                venta.Entrega = new EntregaModel 
+                {
+                    IdVenta = venta.Id.Value,
+                    Estado = EstadoEntregaEnum.Pendiente,
+                    Productos = venta.Detalles?.Select(d => d.Producto).ToList()
+                };
 
                 Ventas?.Add(venta);
                 return true;

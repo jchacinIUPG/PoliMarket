@@ -92,6 +92,7 @@ namespace PoliMarket.Services
             try
             {
                 var venta = _iVentas.ObtenerVentaPorId(entrega.IdVenta);
+                entrega.Productos = venta.Detalles.Select(d => d.Producto).ToList();
                 entrega.Productos.ForEach(p =>
                 {
                     var producto = Bodega.Productos.FirstOrDefault(pd => pd.IdProducto == p.Id);

@@ -9,7 +9,6 @@ namespace PoliMarket.Models
 {
     public class EntregaModel
     {
-        public int Id { get; set; }
         public int IdVenta { get; set; }
         public EstadoEntregaEnum Estado { get; set; }
         public List<ProductoModel>? Productos { get; set; }

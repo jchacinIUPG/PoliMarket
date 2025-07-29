@@ -8,7 +8,7 @@ namespace PoliMarket.Models
 {
     public class VentasModel
     {
-        public long? Id { get; set; }
+        public int? Id { get; set; }
         public DateTime Fecha { get; set; }
         public decimal Total { get; set; }
         public int IdVendedor { get; set; }
